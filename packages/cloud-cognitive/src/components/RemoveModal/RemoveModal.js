@@ -16,9 +16,11 @@ import {
   TextInput,
 } from 'carbon-components-react';
 import PropTypes from 'prop-types';
-import uuidv4 from '../../global/js/utils/uuidv4';
 
+import { getDevtoolsProps } from '../../global/js/utils/devtools';
+import uuidv4 from '../../global/js/utils/uuidv4';
 import { pkg } from '../../settings';
+
 const componentName = 'RemoveModal';
 
 export let RemoveModal = forwardRef(
@@ -57,7 +59,14 @@ export let RemoveModal = forwardRef(
         {...rest}
         className={cx(blockClass, className)}
         size="sm"
-        {...{ open, ref, preventCloseOnClickOutside, onClose }}>
+        {...{
+          open,
+          ref,
+          preventCloseOnClickOutside,
+          onClose,
+          ...getDevtoolsProps(componentName),
+        }}
+      >
         <ModalHeader
           title={title}
           label={label}
@@ -84,7 +93,8 @@ export let RemoveModal = forwardRef(
             type="submit"
             kind="danger"
             onClick={onRequestSubmit}
-            disabled={primaryButtonDisabled}>
+            disabled={primaryButtonDisabled}
+          >
             {primaryButtonText}
           </Button>
         </ModalFooter>
@@ -116,7 +126,7 @@ RemoveModal.propTypes = {
   /**
    * Label for text box
    */
-  inputLabelText: PropTypes.string,
+  inputLabelText: PropTypes.node,
   /**
    * Placeholder for text box
    */

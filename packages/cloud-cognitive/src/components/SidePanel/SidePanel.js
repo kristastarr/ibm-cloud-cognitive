@@ -13,12 +13,16 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useResizeDetector } from 'react-resize-detector';
 import { moderate02 } from '@carbon/motion';
-import wrapFocus from '../../global/js/utils/wrapFocus';
-import { pkg } from '../../settings';
+
+import { getDevtoolsProps } from '../../global/js/utils/devtools';
+
 import {
   allPropTypes,
   deprecateProp,
 } from '../../global/js/utils/props-helper';
+
+import wrapFocus from '../../global/js/utils/wrapFocus';
+import { pkg } from '../../settings';
 import { SIDE_PANEL_SIZES } from './constants';
 
 // Carbon and package components we use.
@@ -376,6 +380,12 @@ export let SidePanel = React.forwardRef(
           onRequestClose();
         }
       };
+      const bodyElement = document.body;
+      if (includeOverlay && open) {
+        bodyElement.style.overflow = 'hidden';
+      } else if (includeOverlay && !open) {
+        bodyElement.style.overflow = 'initial';
+      }
       if (includeOverlay) {
         document.addEventListener('click', handleOutsideClick);
       }
@@ -517,7 +527,8 @@ export let SidePanel = React.forwardRef(
             [`${blockClass}__title-container-is-animating`]:
               !animationComplete || !open,
             [`${blockClass}__title-container-without-title`]: !title,
-          })}>
+          })}
+        >
           {currentStep > 0 && (
             <Button
               aria-label={navigationBackIconDescription}
@@ -555,7 +566,8 @@ export let SidePanel = React.forwardRef(
               [`${blockClass}__subtitle-text-is-animating`]:
                 !animationComplete && animateTitle,
               [`${blockClass}__subtitle-without-title`]: !title,
-            })}>
+            })}
+          >
             {subtitle}
           </p>
         )}
@@ -563,7 +575,8 @@ export let SidePanel = React.forwardRef(
           <div
             className={cx(`${blockClass}__action-toolbar`, {
               [`${blockClass}__action-toolbar-no-animation`]: !animateTitle,
-            })}>
+            })}
+          >
             {actionToolbarButtons.map((action) => (
               <Button
                 key={action.label}
@@ -590,7 +603,8 @@ export let SidePanel = React.forwardRef(
                     ? action.onClick(event)
                     : action.onActionToolbarButtonClick &&
                       action.onActionToolbarButtonClick(event)
-                }>
+                }
+              >
                 {action.leading && action.label}
               </Button>
             ))}
@@ -605,7 +619,8 @@ export let SidePanel = React.forwardRef(
           <h2
             className={`${blockClass}__title-text`}
             title={title}
-            aria-hidden={false}>
+            aria-hidden={false}
+          >
             {title}
           </h2>
         )}
@@ -613,7 +628,8 @@ export let SidePanel = React.forwardRef(
           <h2
             className={`${blockClass}__collapsed-title-text`}
             title={title}
-            aria-hidden={true}>
+            aria-hidden={true}
+          >
             {title}
           </h2>
         )}
@@ -632,10 +648,8 @@ export let SidePanel = React.forwardRef(
       shouldRender && (
         <>
           <div
-            {
-              // Pass through any other property values as HTML attributes.
-              ...rest
-            }
+            {...getDevtoolsProps(componentName)}
+            {...rest}
             id={`${blockClass}-outer`}
             className={mainPanelClassNames}
             style={{
@@ -654,12 +668,14 @@ export let SidePanel = React.forwardRef(
             onBlur={handleBlur}
             ref={contentRef}
             role="complementary"
-            aria-label={title}>
+            aria-label={title}
+          >
             <span
               ref={startTrapRef}
               tabIndex="0"
               role="link"
-              className={`${blockClass}__visually-hidden`}>
+              className={`${blockClass}__visually-hidden`}
+            >
               Focus sentinel
             </span>
             {!animateTitle && renderHeader()}
@@ -669,7 +685,8 @@ export let SidePanel = React.forwardRef(
                 [`${blockClass}__static-inner-content`]: !animateTitle,
                 [`${blockClass}__inner-content-with-actions`]:
                   actions && actions.length,
-              })}>
+              })}
+            >
               {animateTitle && renderHeader()}
               <div className={`${blockClass}__body-content`}>{children}</div>
               <ActionSet
@@ -682,7 +699,8 @@ export let SidePanel = React.forwardRef(
               ref={endTrapRef}
               tabIndex="0"
               role="link"
-              className={`${blockClass}__visually-hidden`}>
+              className={`${blockClass}__visually-hidden`}
+            >
               Focus sentinel
             </span>
           </div>

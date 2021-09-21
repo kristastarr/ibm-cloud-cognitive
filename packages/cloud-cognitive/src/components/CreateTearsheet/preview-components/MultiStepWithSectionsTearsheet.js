@@ -11,6 +11,7 @@ import {
   Button,
   Column,
   Dropdown,
+  FormGroup,
   InlineNotification,
   RadioButtonGroup,
   RadioButton,
@@ -91,7 +92,8 @@ export const MultiStepWithSectionsTearsheet = ({
               resolve();
             }, simulatedDelay);
           })
-        }>
+        }
+      >
         <CreateTearsheetStep
           onMount={async () => {
             try {
@@ -126,7 +128,8 @@ export const MultiStepWithSectionsTearsheet = ({
           fieldsetLegendText="Topic name information"
           disableSubmit={!stepOneTextInputValue}
           subtitle="This is the unique name used to recognize your topic"
-          description="It will also be used by your producers and consumers as part of the connection information, so make it something easy to recognize.">
+          description="It will also be used by your producers and consumers as part of the connection information, so make it something easy to recognize."
+        >
           <Row>
             <Column xlg={8} lg={8} md={8} sm={8}>
               <TextInput
@@ -202,7 +205,10 @@ export const MultiStepWithSectionsTearsheet = ({
               <h4 className={`${componentBlockClass}__step--title`}>
                 Meta data
               </h4>
-              <fieldset className={`${componentBlockClass}__step--fieldset`}>
+              <FormGroup
+                className={`${pkg.prefix}--tearsheet-create__step--fieldset`}
+                legendText="Enter any topic meta data here"
+              >
                 <TextInput
                   labelText="Topic meta data (optional)"
                   id="tearsheet-multi-step-story-text-input-multi-step-1-input-4"
@@ -210,7 +216,7 @@ export const MultiStepWithSectionsTearsheet = ({
                   placeholder="Enter topic meta data"
                   onChange={(event) => setTopicMetaData(event.target.value)}
                 />
-              </fieldset>
+              </FormGroup>
             </Column>
           </Row>
         </CreateTearsheetStep>
@@ -221,7 +227,8 @@ export const MultiStepWithSectionsTearsheet = ({
           onNext={() => Promise.resolve()}
           subtitle="This is how long messages are retained before they are deleted."
           description="If your messages are not read by a consumer within this time, they
-          will be missed.">
+          will be missed."
+        >
           <Row>
             <Column xlg={8} lg={8} md={8} sm={8}>
               <RadioButtonGroup
@@ -229,7 +236,8 @@ export const MultiStepWithSectionsTearsheet = ({
                 name="radio-button-group"
                 defaultSelected={stepThreeTextInputValue}
                 onChange={(value) => setStepThreeTextInputValue(value)}
-                orientation="vertical">
+                orientation="vertical"
+              >
                 <RadioButton labelText="A day" value="one-day" id="one-day" />
                 <RadioButton
                   labelText="A week"

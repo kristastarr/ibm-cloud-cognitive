@@ -11,9 +11,12 @@ import React, { useEffect, useState, useRef } from 'react';
 // Other standard imports.
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
+import { getDevtoolsProps } from '../../global/js/utils/devtools';
 import { useClickOutside } from '../../global/js/hooks';
 import { pkg } from '../../settings';
 import { timeAgo } from './utils';
+
 import { NotificationsEmptyState } from '../EmptyStates/NotificationsEmptyState';
 
 // Carbon and package components we use.
@@ -189,7 +192,8 @@ export let NotificationsPanel = React.forwardRef(
                 });
                 setAllNotifications(newData);
               }}
-              className={showMoreButtonClassName}>
+              className={showMoreButtonClassName}
+            >
               {notification.showAll ? readLessLabel : readMoreLabel}
             </Button>
           )}
@@ -227,7 +231,8 @@ export let NotificationsPanel = React.forwardRef(
             }
             event.which === 13 &&
               notification.onNotificationClick(notification);
-          }}>
+          }}
+        >
           {notification.type === 'error' && (
             <ErrorFilled16
               className={cx([
@@ -289,7 +294,8 @@ export let NotificationsPanel = React.forwardRef(
               notification.link.url && (
                 <Link
                   href={notification.link.url}
-                  className={`${blockClass}__notifications-link`}>
+                  className={`${blockClass}__notifications-link`}
+                >
                   {notification.link.text}
                 </Link>
               )}
@@ -333,7 +339,9 @@ export let NotificationsPanel = React.forwardRef(
           animation: `${open ? 'fadeIn 250ms' : 'fadeOut 250ms'}`,
         }}
         onAnimationEnd={onAnimationEnd}
-        ref={ref || notificationPanelRef}>
+        ref={ref || notificationPanelRef}
+        {...getDevtoolsProps(componentName)}
+      >
         <div className={`${blockClass}__header-container`}>
           <div className={`${blockClass}__header-flex`}>
             <h1 className={`${blockClass}__header`}>{title}</h1>
@@ -341,7 +349,8 @@ export let NotificationsPanel = React.forwardRef(
               size="small"
               kind="ghost"
               className={`${blockClass}__dismiss-button`}
-              onClick={() => onDismissAllNotifications()}>
+              onClick={() => onDismissAllNotifications()}
+            >
               {dismissAllLabel}
             </Button>
           </div>
@@ -403,7 +412,8 @@ export let NotificationsPanel = React.forwardRef(
             <Button
               kind="ghost"
               className={`${blockClass}__view-all-button`}
-              onClick={() => onViewAllClick()}>
+              onClick={() => onViewAllClick()}
+            >
               {viewAllLabel(allNotifications.length)}
             </Button>
             <Button

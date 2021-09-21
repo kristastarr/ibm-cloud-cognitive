@@ -15,8 +15,10 @@ import { CreateTearsheet } from './CreateTearsheet';
 import { CreateTearsheetStep } from './CreateTearsheetStep';
 import { CreateTearsheetSection } from './CreateTearsheetSection';
 import uuidv4 from '../../global/js/utils/uuidv4';
-const createTearsheetBlockClass = `${pkg.prefix}--tearsheet-create`;
-const createInfluencerBlockClass = `${pkg.prefix}--create-influencer`;
+const { devtoolsAttribute, getDevtoolsId, prefix } = pkg;
+const createTearsheetBlockClass = `${prefix}--tearsheet-create`;
+const createInfluencerBlockClass = `${prefix}--create-influencer`;
+const componentName = CreateTearsheet.displayName;
 
 const rejectionErrorMessage = uuidv4();
 const onCloseFn = jest.fn();
@@ -72,7 +74,8 @@ const renderCreateTearsheet = (
         onNext={rejectOnNext ? onNextStepRejectionFn : onNext}
         title={step1Title}
         fieldsetLegendText={step1Title}
-        onMount={onMountFn}>
+        onMount={onMountFn}
+      >
         step 1 content
         <button type="button" disabled>
           Test
@@ -85,7 +88,8 @@ const renderCreateTearsheet = (
       <CreateTearsheetStep
         title={step3Title}
         fieldsetLegendText={step3Title}
-        onNext={rejectOnSubmitNext ? finalStepOnNextRejectFn : finalOnNextFn}>
+        onNext={rejectOnSubmitNext ? finalStepOnNextRejectFn : finalOnNextFn}
+      >
         step 3 content
       </CreateTearsheetStep>
     </>
@@ -94,7 +98,8 @@ const renderCreateTearsheet = (
   render(
     <CreateTearsheet
       onRequestSubmit={rejectOnSubmit ? onRequestSubmitRejectFn : submitFn}
-      {...rest}>
+      {...rest}
+    >
       {children}
     </CreateTearsheet>
   );
@@ -148,6 +153,10 @@ describe(CreateTearsheet.displayName, () => {
       'data-testid': dataTestId,
     });
     screen.getByTestId(dataTestId);
+    expect(screen.getByTestId(dataTestId)).toHaveAttribute(
+      devtoolsAttribute,
+      getDevtoolsId(componentName)
+    );
     screen.getAllByText(title);
     expect(
       container.querySelector(`.${createTearsheetBlockClass}`)
@@ -254,7 +263,8 @@ describe(CreateTearsheet.displayName, () => {
       <CreateTearsheet
         {...defaultProps}
         open={false}
-        onRequestSubmit={onRequestSubmitFn}>
+        onRequestSubmit={onRequestSubmitFn}
+      >
         <CreateTearsheetStep title={step1Title} fieldsetLegendText={step1Title}>
           step 1 content
         </CreateTearsheetStep>
@@ -420,7 +430,8 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep onNext={jest.fn()} title={step1Title}>
           step 1 content
           <button type="button" disabled>
@@ -455,7 +466,8 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}></CreateTearsheet>
+        {...defaultProps}
+      ></CreateTearsheet>
     );
     rerender(
       <CreateTearsheet
@@ -465,7 +477,8 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep onNext={jest.fn()} title={step1Title} />
       </CreateTearsheet>
     );
@@ -477,7 +490,8 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep onNext={jest.fn()} title={step1Title}>
           <CreateTearsheetSection title="test" id={uuidv4()}>
             content
@@ -494,7 +508,8 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep onNext={jest.fn()} title={step1Title}>
           <CreateTearsheetSection title="test" id={uuidv4()}>
             content
@@ -510,7 +525,8 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep onNext={jest.fn()} title={step1Title}>
           <p>test</p>
         </CreateTearsheetStep>
@@ -530,11 +546,13 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep
           onNext={jest.fn()}
           title={step1Title}
-          disableSubmit>
+          disableSubmit
+        >
           <CreateTearsheetSection title="test" id={uuidv4()}>
             content
           </CreateTearsheetSection>
@@ -565,27 +583,32 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep
           onNext={jest.fn()}
           title={step1Title}
-          disableSubmit>
+          disableSubmit
+        >
           <CreateTearsheetSection
             title="test title 1"
-            id={`section-id-${uuidv4()}`}>
+            id={`section-id-${uuidv4()}`}
+          >
             content
           </CreateTearsheetSection>
           <CreateTearsheetSection
             viewAllOnly
             title="Meta data"
-            id="create-tearsheet-section-meta-data">
+            id="create-tearsheet-section-meta-data"
+          >
             hidden content, only visible when viewAllOnly toggle is on
           </CreateTearsheetSection>
         </CreateTearsheetStep>
         <CreateTearsheetStep title={step2Title}>
           <CreateTearsheetSection
             title="test title 2"
-            id={`section-id-${uuidv4()}`}>
+            id={`section-id-${uuidv4()}`}
+          >
             content
           </CreateTearsheetSection>
         </CreateTearsheetStep>
@@ -613,18 +636,21 @@ describe(CreateTearsheet.displayName, () => {
         viewAllToggleOffLabelText="Off"
         viewAllToggleOnLabelText="On"
         sideNavAriaLabel="Side nav aria label"
-        {...defaultProps}>
+        {...defaultProps}
+      >
         <CreateTearsheetStep
           hasFieldset={false}
           title={step1Title}
           subtitle="Step 1 subtitle"
           description="Step 1 description"
           onNext={jest.fn()}
-          disableSubmit>
+          disableSubmit
+        >
           <CreateTearsheetSection
             title="test title 1"
             subtitle="test subtitle 1"
-            description="test description 1">
+            description="test description 1"
+          >
             content
           </CreateTearsheetSection>
         </CreateTearsheetStep>
@@ -632,7 +658,8 @@ describe(CreateTearsheet.displayName, () => {
           <CreateTearsheetSection
             title="test title 2"
             subtitle="test subtitle 2"
-            description="test description 2">
+            description="test description 2"
+          >
             content
           </CreateTearsheetSection>
         </CreateTearsheetStep>

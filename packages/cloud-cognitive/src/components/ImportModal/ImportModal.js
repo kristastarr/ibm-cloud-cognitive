@@ -18,7 +18,10 @@ import {
 } from 'carbon-components-react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+
+import { getDevtoolsProps } from '../../global/js/utils/devtools';
 import uuidv4 from '../../global/js/utils/uuidv4';
+
 import { pkg } from '../../settings';
 const componentName = 'ImportModal';
 
@@ -160,11 +163,12 @@ export let ImportModal = forwardRef(
     return (
       <ComposedModal
         {...rest}
-        {...{ open, ref, onClose }}
+        {...{ open, ref, onClose, ...getDevtoolsProps(componentName) }}
         aria-label={title}
         className={cx(blockClass, className)}
         size="sm"
-        preventCloseOnClickOutside>
+        preventCloseOnClickOutside
+      >
         <ModalHeader className={`${blockClass}__header`} title={title} />
         <ModalBody className={`${blockClass}__body-container`}>
           {description && (
@@ -196,7 +200,8 @@ export let ImportModal = forwardRef(
               onClick={fetchFile}
               className={`${blockClass}__import-button`}
               size="sm"
-              disabled={importButtonDisabled}>
+              disabled={importButtonDisabled}
+            >
               {inputButtonText}
             </Button>
           </div>
@@ -229,7 +234,8 @@ export let ImportModal = forwardRef(
             type="submit"
             kind="primary"
             onClick={onSubmitHandler}
-            disabled={primaryButtonDisabled}>
+            disabled={primaryButtonDisabled}
+          >
             {primaryButtonText}
           </Button>
         </ModalFooter>

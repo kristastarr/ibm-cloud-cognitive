@@ -15,7 +15,10 @@ import {
   ErrorFilled16,
 } from '@carbon/icons-react';
 import PropTypes from 'prop-types';
+
+import { getDevtoolsProps } from '../../global/js/utils/devtools';
 import { pkg } from '../../settings';
+
 const componentName = 'Saving';
 
 export let Saving = forwardRef(
@@ -64,7 +67,12 @@ export let Saving = forwardRef(
     const blockClass = `${pkg.prefix}--saving`;
 
     return (
-      <div {...rest} ref={ref} className={cx(blockClass, className)}>
+      <div
+        {...rest}
+        ref={ref}
+        className={cx(blockClass, className)}
+        {...getDevtoolsProps(componentName)}
+      >
         {type === 'auto' ? (
           <div className={`${blockClass}__message`}>
             {status === 'fail' && (
@@ -80,7 +88,8 @@ export let Saving = forwardRef(
               onClick={onRequestCancel}
               kind="secondary"
               disabled={status !== 'in-progress'}
-              type="button">
+              type="button"
+            >
               {secondaryButtonText}
             </Button>
             <Button
@@ -89,7 +98,8 @@ export let Saving = forwardRef(
               renderIcon={statusObj[status]?.icon}
               iconDescription={statusObj[status]?.iconDescription}
               disabled={status === 'in-progress'}
-              type="button">
+              type="button"
+            >
               {statusObj[status]?.text}
             </Button>
           </div>

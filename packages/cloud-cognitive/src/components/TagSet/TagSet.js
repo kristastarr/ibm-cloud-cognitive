@@ -15,8 +15,9 @@ import { TagSetModal } from './TagSetModal';
 import { Tag } from 'carbon-components-react';
 import { useResizeDetector } from 'react-resize-detector';
 
-import { pkg } from '../../settings';
+import { getDevtoolsProps } from '../../global/js/utils/devtools';
 import { prepareProps, isRequiredIf } from '../../global/js/utils/props-helper';
+import { pkg } from '../../settings';
 
 const componentName = 'TagSet';
 const blockClass = `${pkg.prefix}--tag-set`;
@@ -67,7 +68,8 @@ export let TagSet = React.forwardRef(
                 <div
                   key={index}
                   className={`${blockClass}__sizing-tag`}
-                  ref={(el) => (newSizingTags[index] = el)}>
+                  ref={(el) => (newSizingTags[index] = el)}
+                >
                   <Tag {...other} filter={false}>
                     {label}
                   </Tag>
@@ -197,16 +199,23 @@ export let TagSet = React.forwardRef(
     });
 
     return (
-      <div {...rest} className={cx([blockClass, className])} ref={tagSetRef}>
+      <div
+        {...rest}
+        className={cx([blockClass, className])}
+        ref={tagSetRef}
+        {...getDevtoolsProps(componentName)}
+      >
         <div
           className={cx([
             `${blockClass}__space`,
             `${blockClass}__space--align-${align}`,
-          ])}>
+          ])}
+        >
           <div
             className={`${blockClass}__tag-container ${blockClass}__tag-container--hidden`}
             aria-hidden={true}
-            ref={sizingContainerRef}>
+            ref={sizingContainerRef}
+          >
             {hiddenSizingTags}
           </div>
 
