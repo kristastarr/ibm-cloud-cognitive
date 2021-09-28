@@ -48,12 +48,14 @@
     "test:js": "jest --colors",
     "test:scss": "bundler check 'src/**/*.scss'",
     "//upgrade-dependencies": "# don't upgrade carbon (done globally), react/react-dom (explicit range peer dependency)",
-    "upgrade-dependencies": "npm-check-updates -u --color --reject '/(carbon|^react$|^react-dom$)/'"
+    "upgrade-dependencies": "npm-check-updates -u --color --reject '/(carbon|^react$|^react-dom$)/'",
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.5",
     "@carbon/bundler": "^10.11.0",
+    "@storybook/storybook-deployer": "^2.8.10",
     "babel-preset-ibm-cloud-cognitive": "^0.10.0",
     "chalk": "^4.1.2",
     "change-case": "^4.1.2",
