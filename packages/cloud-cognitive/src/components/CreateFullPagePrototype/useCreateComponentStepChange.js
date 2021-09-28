@@ -116,6 +116,13 @@ export const useCreateComponentStepChange = ({
 
     if (displayCorrectSteps()?.length) {
       const createSteps = displayCorrectSteps();
+   
+      // createSteps.map((step) => console.log(step.props.viewAllOnly ?? step.props.viewOnly == true));
+      // console.log(newSteps)
+
+      let newSteps = createSteps.filter((step) => step.props.viewAllOnly ?? step.props.viewOnly == true);
+     newSteps.map((step) => console.log(step))
+
       const total = createSteps.length;
       const buttons = [];
       buttons.push({
