@@ -9,8 +9,8 @@
 
 @import 'carbon-components/scss/components/progress-indicator/progress-indicator';
 
-@mixin create-influencer {
-  $block-class: #{$pkg-prefix}--create-influencer;
+@mixin create-influencer-prototype {
+  $block-class: #{$pkg-prefix}--create-influencer-prototype;
   $create-tearsheet-block-class: #{$pkg-prefix}--tearsheet-create;
   $influencerAnimationStart: calc(-1 * #{$spacing-05});
   @keyframes influencerMenuEntrance {
@@ -43,30 +43,10 @@
   }
 
   .#{$block-class}__left-nav {
-    height: calc(100vh - 119px);
     grid-column: 1 / -1;
     grid-row: 1 / -1;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
-
-  .stepTransition {
-    .bx--progress-step {
-      @include carbon--motion(entrance, productive);
-      
-      animation: $duration--moderate-02 fade-in-step 200ms forwards;
-      opacity: 0;
-    }
-  }
-
-  @keyframes fade-in-step {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  //
 
   .#{$block-class}__progress-indicator {
     padding: $spacing-06;
@@ -77,7 +57,6 @@
     grid-column: 1 / -1;
     grid-row: -1 / -1;
   }
-
   .#{$block-class}__side-nav-opening,
   .#{$block-class}__progress-indicator-opening {
     // stylelint-disable-next-line carbon/motion-token-use
@@ -105,6 +84,6 @@
   }
 }
 
-@include exports('create-influencer') {
-  @include create-influencer;
+@include exports('create-influencer-prototype') {
+  @include create-influencer-prototype;
 }
