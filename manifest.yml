@@ -1,0 +1,4 @@
+---
+applications:
+- name: ccs-motion-storybook
+  memory: 64M
