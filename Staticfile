@@ -1,2 +1,2 @@
-root: storybook-static
+root: /packages/core/storybook-static
 force_https: true
